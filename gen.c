@@ -13,6 +13,7 @@ typedef const char cc;
  *      e. c doequal :: autogenerates a basic function for checking if two strings equal eachother
  *      f. c strcon :: autogenerates a basic function for concatenating contents to a string
  *      g. c smart alloc :: autogenerates a basic function for rellocating a given string, while still keeping the current contents
+ *      h. c trim :: autogenerates three basic functions: ltrim (for left trimming), rtrim (for right trimming), and trim (for both)
  * 
  * 2. HTML/Bootstrap Commands:
  *      a. html :: autogenerates a basic HTML 5 file structure with JQuery JS and Bootstrap CDNs linked
@@ -218,25 +219,29 @@ int main(int argc, char * argv[]){
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 118);
                 strcon(auto_gen_code, "#include <stdio.h>\n#include <stdlib.h>\n\nint main(int argc, char * argv[]){\n\t// Insert code here\n\treturn 0;\n}\n");
             } else if (doequal(trim(file_contents), "c whitespace") == 1){
-                // basic C program structure
+                // basic C whitespace checker
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 297);
                 strcon(auto_gen_code, "const char blank = ' ';\nconst char new_line = '\\n';\nconst char carraige_return = '\\r';\nconst char tab = '\\t';\nconst char form_feed = '\\f';\nconst char vertical_tab = '\\v';\n\nint check_for_whitespace(const char c){\n\tif(c == blank || c == new_line || c == carraige_return || c == tab || c == form_feed || c == vertical_tab)\n\t\treturn 1;\n\telse\n\t\treturn 0;\n}\n");
             } else if (doequal(trim(file_contents), "c strflip") == 1){
-                // basic C program structure
-                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 272);
-                strcon(auto_gen_code, "char * strflip(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tfor(int x = (strlength(s) - 1); x >= 0; x--){\n\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\tnew_string[count++] = s[x];\n\t}\n\treturn new_string;\n}\n");
+                // basic C string flipper function
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 314);
+                strcon(auto_gen_code, "/** Requires strlength and <stdlib.h> **/\nchar * strflip(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tfor(int x = (strlength(s) - 1); x >= 0; x--){\n\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\tnew_string[count++] = s[x];\n\t}\n\treturn new_string;\n}\n");
             } else if (doequal(trim(file_contents), "c doequal") == 1){
-                // basic C program structure
-                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 267);
-                strcon(auto_gen_code, "int doequal(char * first_string, char * second_string){\n\tif(strlength(first_string) != strlength(second_string)){\n\t\treturn 0;\n\t} else {\n\t\tfor(int x = 0; x < strlength(first_string); x++){\n\t\t\tif(first_string[x] != second_string[x])\n\t\t\t\treturn 0;\n\t\t}\n\t\treturn 1;\n\t}\n}\n");
+                // basic C string comparer function
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 294);
+                strcon(auto_gen_code, "/** Requires strlength **/\nint doequal(char * first_string, char * second_string){\n\tif(strlength(first_string) != strlength(second_string)){\n\t\treturn 0;\n\t} else {\n\t\tfor(int x = 0; x < strlength(first_string); x++){\n\t\t\tif(first_string[x] != second_string[x])\n\t\t\t\treturn 0;\n\t\t}\n\t\treturn 1;\n\t}\n}\n");
             } else if (doequal(trim(file_contents), "c strcon") == 1){
-                // basic C program structure
-                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 194);
-                strcon(auto_gen_code, "char * strcon(char * destination, const char * source){\n\tchar * ptr = destination + strlength(destination);\n\n\twhile (*source != '\\0')\n\t\t*ptr++ = *source++;\n\n\t*ptr = '\\0';\n\n\treturn destination;\n}\n");
+                // basic C string concatenator function
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 223);
+                strcon(auto_gen_code, "/** Requires strlength **/\nchar * strcon(char * destination, const char * source){\n\tchar * ptr = destination + strlength(destination);\n\n\twhile (*source != '\\0')\n\t\t*ptr++ = *source++;\n\n\t*ptr = '\\0';\n\n\treturn destination;\n}\n");
             } else if (doequal(trim(file_contents), "c smart realloc") == 1){
-                // basic C program structure
-                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 358);
-                strcon(auto_gen_code, "char * smart_realloc(char ** string, int new_size){\n\tchar * temp_string = (char *)calloc(strlength(*string), sizeof(char));\n\n\tfor (int x = 0; x < strlength(*string); x++)\n\t\ttemp_string[x] = (*string)[x];\n\n\t*string = (char *)realloc(*string, new_size);\n\n\tfor (int x = 0; x < strlength(temp_string); x++)\n\t\t(* string)[x] = temp_string[x];\n\n\treturn *string;\n}\n");
+                // basic C smart reallocation function
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 400);
+                strcon(auto_gen_code, "/** Requires strlength and <stdlib.h> **/\nchar * smart_realloc(char ** string, int new_size){\n\tchar * temp_string = (char *)calloc(strlength(*string), sizeof(char));\n\n\tfor (int x = 0; x < strlength(*string); x++)\n\t\ttemp_string[x] = (*string)[x];\n\n\t*string = (char *)realloc(*string, new_size);\n\n\tfor (int x = 0; x < strlength(temp_string); x++)\n\t\t(* string)[x] = temp_string[x];\n\n\treturn *string;\n}\n");
+            } else if (doequal(trim(file_contents), "c trim") == 1){
+                // basic C trim functions
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 1161);
+                strcon(auto_gen_code, "/** Requires strlength and whitespace **/\nchar * rtrim(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tint stop_checking = 0;\n\tfor(int x = (strlength(s) - 1); x >= 0; x--){\n\t\tif(stop_checking == 0){\n\t\t\tif(check_for_whitespace(s[x]) == 0){\n\t\t\t\tstop_checking = 1;\n\t\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\t\tnew_string[count++] = s[x];\n\t\t\t}\n\t\t} else {\n\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\tnew_string[count++] = s[x];\n\t\t}\n\t}\n\tnew_string = strflip(new_string);\n\treturn new_string;\n}\n\nchar * ltrim(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tint stop_checking = 0;\n\tfor(int x = 0; x < strlength(s); x++){\n\t\tif(stop_checking == 0){\n\t\t\tif(check_for_whitespace(s[x]) == 0){\n\t\t\t\tstop_checking = 1;\n\t\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\t\tnew_string[count++] = s[x];\n\t\t\t}\n\t\t} else {\n\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\tnew_string[count++] = s[x];\n\t\t}\n\t}\n\treturn new_string;\n}\n\nchar * trim(char * s){\n\ts = ltrim(s);\n\ts = rtrim(s);\n\treturn s;\n}\n");
             } else {
                 // if no command found, just re-display the current contents of that line
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 2000);
