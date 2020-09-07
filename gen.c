@@ -27,9 +27,12 @@ typedef const char cc;
  *      i. form :: autogenerates a basic Bootstrap Form
  * 
  * 3. PHP Commands:
- *      a. connect database :: autogenerates a basic PHP connection to a given Database
+ *      a. mysql connect :: autogenerates a basic PHP connection to a given Database (MySQL)
  *      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)
  *      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)
+ *      d. sql connect :: autogenerates a basic PHP connection to a given Database (SQL)
+ *      e. sql select :: autogenerates a basic sql select statement (must connect to database first)
+ *      f. sql insert :: autogenerates a basic sql insert statement (must connect to database first)
  * 
  * 4. Bash Commands:
  *      a. sh header :: autogenerates the bash mandatory header code
@@ -40,6 +43,8 @@ typedef const char cc;
  * 6. JavaScript Commands:
  *      a. js goto url :: autogenerates basic JS to change the current URL
  *      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page
+ *      c. js button :: autogenerates a Bootstrap button that is connected to a JS function
+ *      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)
  **/
 
 cc blank = ' ';
@@ -185,8 +190,8 @@ int main(int argc, char * argv[]){
                 // top portion of html basic structure (with JS and Bootstrap)
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 512);
                 strcon(auto_gen_code, "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\t<title>Document</title>\n\t<script src=\"https://code.jquery.com/jquery-1.12.4.min.js\"></script>\n\t<link rel=\"stylesheet\" type=\"text/css\" crossorigin=\"anonymous\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css\">\n\t<script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js\" crossorigin=\"anonymous\"></script>\n</head>\n<body>\n");
-            } else if (doequal(trim(file_contents), "connect database") == 1){
-                // php connection to database
+            } else if (doequal(trim(file_contents), "mysql connect") == 1){
+                // php connection to database (MySQL)
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 301);
                 strcon(auto_gen_code, "\t$servername = \"localhost\";\n\t$username = \"username\";\n\t$password = \"password\";\n\t$dbname = \"myDB\";\n\n\t// Create connection\n\t$conn = new mysqli_connect($servername, $username, $password, $dbname);\n\n\t// Check connection\n\tif ($conn->connect_error) {\n\t\tdie(\"Connection failed: \" . $conn->connect_error);\n\t}\n");
             } else if (doequal(trim(file_contents), "table") == 1){
@@ -270,9 +275,29 @@ int main(int argc, char * argv[]){
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 58);
                 strcon(auto_gen_code, "window.history.replaceState(null, null, \"somePage.php\");\n");
             } else if (doequal(trim(file_contents), "logg") == 1){
-                // basic JS replace state
-                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 331);
+                // basic PHP logg() function
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 332);
                 strcon(auto_gen_code, "\tfunction logg($msg,$type = \"normal\"){\n\t\tif(strtolower($type) == \"normal\"){\n\t\t\techo \"<script> console.log('\".$msg.\"'); </script>\";\n\t\t} elseif (strtolower($type) == \"error\"){\n\t\t\techo \"<script> console.error('\".$msg.\"'); </script>\";\n\t\t} else {\n\t\t\techo \"<script> console.error('Type \".$type.\" is not recognized.'); </script>\";\n\t\t}\n\t}\n");
+            } else if (doequal(trim(file_contents), "js button") == 1){
+                // basic JS + Bootstrap button
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 140);
+                strcon(auto_gen_code, "<a type=\"button\" class=\"btn btn-outline-secondary\" onclick=\"f()\">Click Me</a>\n<script type=\"text/Javascript\">\n\tfunction f(){\n\n\t}\n</script>\n");
+            } else if (doequal(trim(file_contents), "sql connect") == 1){
+                // basic PHP connection to database (SQL)
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 265);
+                strcon(auto_gen_code, "\t$serverName = \"serverName\";\n\t$connectionInfo = array(\"Database\"=>\"DatabaseName\", \"UID\"=>\"username\", \"PWD\"=>\"password\");\n\n\t$conn = sqlsrv_connect($server, $connectionInfo);\n\n\tif ($conn === false){\n\t\techo \"Failed.<br />\";\n\t\tdie (print_r(sqlsrv_errors(), true));\n\t}\n");
+            } else if (doequal(trim(file_contents), "sql select") == 1){
+                // basic SQL select statement
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 441);
+                strcon(auto_gen_code, "\ttry {\n\t\t$name = \"testName\";\n\t\t$params = array($name);\n\t\t$query = \"SELECT column_name FROM table_name WHERE column_name = ?;\";\n\n\t\t$values = array();\n\t\tif ($result = sqlsrv_query($conn, $query, $params)){\n\t\t\twhile ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)){\n\t\t\t\tif ($row === false){\n\t\t\t\t\tdie (print_r(sqlsrv_errors(), true));\n\t\t\t\t\t}\n\t\t\t\tarray_push($values, $row['column_name']);\n\t\t\t}\n\t\t}\n\t} catch (Exception $e){\n\t\techo $e;\n\t}\n");
+            } else if (doequal(trim(file_contents), "sql insert") == 1){
+                // basic SQL insert statement
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 358);
+                strcon(auto_gen_code, "\ttry {\n\t\t$a_value = \"BOB\";\n\t\t$another_value = \"BILLY\";\n\t\t$name = \"testName\";\n\t\t$params = array($a_value, $another_value, $name);\n\t\t$query = \"INSERT INTO table_name\n\t\t([column_name]\n\t\t,[another_column_name])\n\t\tVALUES (?, ?) WHERE column_name = ?;\";\n\n\t\tif ($result === false)){\n\t\t\t// Failed\n\t\t} else {\n\t\t\t// Success\n\t\t}\n\t} catch (Exception $e){\n\t\techo $e;\n\t}\n");
+            } else if (doequal(trim(file_contents), "js snackbar") == 1){
+                // JS snackbar
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 1700);
+                strcon(auto_gen_code, "<!-- Put CSS in <head> -->\n<style>\n#snackbar {\n\tvisibility: hidden;\n\tmin-width: 250px;\n\tmax-width: 500px;\n\tmargin-left: auto;\n\tmargin-right: auto;\n\tbackground-color: #04de07;\n\tcolor: #fff;\n\ttext-align: center;\n\tborder-radius: 2px;\n\tpadding: 16px;\n\tposition: fixed;\n\tz-index: 1;\n\tleft: 0;\n\tright: 0;\n\tbottom: 30px;\n\tfont-size: 17px;\n}\n\n#snackbar.show {\n\tvisibility: visible;\n\t-webkit-animation: fadein 0.5s, fadeout 5s 2.5s;\n\tanimation: fadein 0.5s, fadeout 0.5s 2.5s;\n}\n\n@-webkit-keyframes fadein {\n\tfrom {bottom: 0; opacity: 0;}\n\tto {bottom: 30px; opacity: 1;}\n}\n\n@keyframes fadein {\n\tfrom {bottom: 0; opacity: 0;}\n\tto {bottom: 30px; opacity: 1;}\n}\n\n@-webkit-keyframes fadeout {\n\tfrom {bottom: 30px; opacity: 1;}\n\tto {bottom: 0; opacity: 0;}\n}\n\n@keyframes fadeout {\n\tfrom {bottom: 30px; opacity: 1;}\n\tto {bottom: 0; opacity: 0;}\n}\n</style>\n\t<div id=\"snackbar\"><b>Error 101:</b> This is a timed snackbar.<div style=\"display: inline;\" id=\"countdown\">4</div>s</div>\n\t<script type=\"text/Javascript\">\n\t\tfunction snackbar() {\n\t\t\tvar x = document.getElementById(\"snackbar\");\n\t\t\tx.className = \"show\";\n\t\t\tsetTimeout(function(){ x.className = x.className.replace(\"show\", \"\"); }, 3000);\n\t\t\ttime();\n\t\t}\n\n\t\tfunction time(){\n\t\t\tvar seconds;\n\t\t\tvar temp;\n\n\t\t\tfunction countdown() {\n\t\t\t\tseconds = document.getElementById('countdown').innerHTML;\n\t\t\t\tseconds = parseInt(seconds, 10);\n\n\t\t\t\tif (seconds == 1) {\n\t\t\t\t\ttemp = document.getElementById('countdown');\n\t\t\t\t\ttemp.innerHTML = \"4\";\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tseconds--;\n\t\t\t\ttemp = document.getElementById('countdown');\n\t\t\t\ttemp.innerHTML = seconds;\n\t\t\t\ttimeoutMyOswego = setTimeout(countdown, 1000);\n\t\t\t}\n\n\t\t\tcountdown();\n\t\t}\n\t\t// Invoke with snackbar()\n\t</script>\n");
             } else {
                 // if no command found, just re-display the current contents of that line
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 2000);
