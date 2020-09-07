@@ -29,6 +29,17 @@ typedef const char cc;
  * 3. PHP Commands:
  *      a. connect database :: autogenerates a basic PHP connection to a given Database
  *      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)
+ *      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)
+ * 
+ * 4. Bash Commands:
+ *      a. sh header :: autogenerates the bash mandatory header code
+ * 
+ * 5. C++ Commands:
+ *      a. cpp program :: autogenerates a basic C++ program
+ * 
+ * 6. JavaScript Commands:
+ *      a. js goto url :: autogenerates basic JS to change the current URL
+ *      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page
  **/
 
 cc blank = ' ';
@@ -242,6 +253,26 @@ int main(int argc, char * argv[]){
                 // basic C trim functions
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 1161);
                 strcon(auto_gen_code, "/** Requires strlength and whitespace **/\nchar * rtrim(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tint stop_checking = 0;\n\tfor(int x = (strlength(s) - 1); x >= 0; x--){\n\t\tif(stop_checking == 0){\n\t\t\tif(check_for_whitespace(s[x]) == 0){\n\t\t\t\tstop_checking = 1;\n\t\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\t\tnew_string[count++] = s[x];\n\t\t\t}\n\t\t} else {\n\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\tnew_string[count++] = s[x];\n\t\t}\n\t}\n\tnew_string = strflip(new_string);\n\treturn new_string;\n}\n\nchar * ltrim(char * s){\n\tchar * new_string = (char *)calloc(1, sizeof(char));\n\tint count = 0;\n\tint stop_checking = 0;\n\tfor(int x = 0; x < strlength(s); x++){\n\t\tif(stop_checking == 0){\n\t\t\tif(check_for_whitespace(s[x]) == 0){\n\t\t\t\tstop_checking = 1;\n\t\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\t\tnew_string[count++] = s[x];\n\t\t\t}\n\t\t} else {\n\t\t\tif(count != 0){ new_string = (char *)realloc(new_string, count + 1); }\n\t\t\tnew_string[count++] = s[x];\n\t\t}\n\t}\n\treturn new_string;\n}\n\nchar * trim(char * s){\n\ts = ltrim(s);\n\ts = rtrim(s);\n\treturn s;\n}\n");
+            } else if (doequal(trim(file_contents), "sh header") == 1){
+                // bash header comment
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 13);
+                strcon(auto_gen_code, "#!/bin/bash\n");
+            } else if (doequal(trim(file_contents), "cpp program") == 1){
+                // basic C++ program structure
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 91);
+                strcon(auto_gen_code, "#include <iostream>\n\nint main(int argc, char * argv[]){\n\t// Enter code here!\n\treturn 0;\n}\n");
+            } else if (doequal(trim(file_contents), "js goto url") == 1){
+                // basic JS change url
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 44);
+                strcon(auto_gen_code, "window.location.href = \"someOtherURL.php\";\n");
+            } else if (doequal(trim(file_contents), "js prevent re-post") == 1){
+                // basic JS replace state
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 58);
+                strcon(auto_gen_code, "window.history.replaceState(null, null, \"somePage.php\");\n");
+            } else if (doequal(trim(file_contents), "logg") == 1){
+                // basic JS replace state
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 331);
+                strcon(auto_gen_code, "\tfunction logg($msg,$type = \"normal\"){\n\t\tif(strtolower($type) == \"normal\"){\n\t\t\techo \"<script> console.log('\".$msg.\"'); </script>\";\n\t\t} elseif (strtolower($type) == \"error\"){\n\t\t\techo \"<script> console.error('\".$msg.\"'); </script>\";\n\t\t} else {\n\t\t\techo \"<script> console.error('Type \".$type.\" is not recognized.'); </script>\";\n\t\t}\n\t}\n");
             } else {
                 // if no command found, just re-display the current contents of that line
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 2000);
