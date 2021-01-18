@@ -139,6 +139,23 @@ int doequal(char * first_string, char * second_string){
     }
 }
 
+int ldoequal(char * first_string, char * second_string){
+    for (int x = 0; x < strlength(second_string); x++){
+        if (second_string[x] != first_string[x])
+            return 0;
+    }
+    return 1;
+}
+
+char * getafter(char * first_string, cc * after){
+    char * new_string = (char *)calloc(strlength(first_string) - strlength(after), sizeof(char));
+    int y = 0;
+    for (int x = strlength(after); x < strlength(first_string); x++){
+        new_string[y++] = first_string[x];
+    }
+    return new_string;
+}
+
 char * strcon(char * destination, const char * source){
     char * ptr = destination + strlength(destination);
 
@@ -164,8 +181,65 @@ char * smart_realloc(char ** string, int new_size){
     return *string;
 }
 
+char * smart_strcon(char * destination, const char * source){
+    int size = strlength(destination) + strlength(source);
+    smart_realloc(&destination, size);
+    strcon(destination, source);
+    return destination;
+}
+
 int main(int argc, char * argv[]){
     if(argc > 1){
+        if(doequal((char *)"help",argv[1])){
+            printf("/**\n\t"
+                    "* All Commands:\n\t"
+                    "* \n\t"
+                    "* 1. C Commands:\n\t"
+                    "*      a. c program :: autogenerates a basic c program file structure\n\t"
+                    "*      b. c strlength :: autogenerates a basic function for getting the length of any string\n\t"
+                    "*      c. c whitespace :: autogenerates a basic function for checking if a given string contains unwanted keywords and spaces\n\t"
+                    "*      d. c strflip :: autogenerates a basic function for reversing the contents of a string\n\t"
+                    "*      e. c doequal :: autogenerates a basic function for checking if two strings equal eachother\n\t"
+                    "*      f. c strcon :: autogenerates a basic function for concatenating contents to a string\n\t"
+                    "*      g. c smart alloc :: autogenerates a basic function for rellocating a given string, while still keeping the current contents\n\t"
+                    "*      h. c trim :: autogenerates three basic functions: ltrim (for left trimming), rtrim (for right trimming), and trim (for both)\n\t"
+                    "* \n\t"
+                    "* 2. HTML/Bootstrap Commands:\n\t"
+                    "*      a. html :: autogenerates a basic HTML 5 file structure with JQuery JS and Bootstrap CDNs linked\n\t"
+                    "*      b. top html :: autogenerates the top portion of a basic HTML 5 file structure (with JQuery JS and Bootstrap). Top portion is defined as from the top all the way to the beginning <body> tag.\n\t"
+                    "*      c. bottom html :: autogenerates the bottom portion of a basic HTML 5 file structure. The bottom portion is defined as the end body and html tags (</body> and </html>)\n\t"
+                    "*      d. table :: autogenerates a basic Bootstrap Table\n\t"
+                    "*      e. three columns :: autogenerates a basic Bootstrap three columned row\n\t"
+                    "*      f. two columns :: autogenerates a basic Bootstrap two columned row\n\t"
+                    "*      g. card :: autogenerates a basic Bootstrap Card\n\t"
+                    "*      h. breadcrumb :: autogenerates a basic Bootstrap Breadcrumb\n\t"
+                    "*      i. form :: autogenerates a basic Bootstrap Form\n\t"
+                    "* \n\t"
+                    "* 3. PHP Commands:\n\t"
+                    "*      a. mysql connect :: autogenerates a basic PHP connection to a given Database (MySQL)\n\t"
+                    "*      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)\n\t"
+                    "*      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)\n\t"
+                    "*      d. sql connect :: autogenerates a basic PHP connection to a given Database (SQL)\n\t"
+                    "*      e. sql select :: autogenerates a basic sql select statement (must connect to database first)\n\t"
+                    "*      f. sql insert :: autogenerates a basic sql insert statement (must connect to database first)\n\t"
+                    "* \n\t"
+                    "* 4. Bash Commands:\n\t"
+                    "*      a. sh header :: autogenerates the bash mandatory header code\n\t"
+                    "* \n\t"
+                    "* 5. C++ Commands:\n\t"
+                    "*      a. cpp program :: autogenerates a basic C++ program\n\t"
+                    "* \n\t"
+                    "* 6. JavaScript Commands:\n\t"
+                    "*      a. js goto url :: autogenerates basic JS to change the current URL\n\t"
+                    "*      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page\n\t"
+                    "*      c. js button :: autogenerates a Bootstrap button that is connected to a JS function\n\t"
+                    "*      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)\n\t"
+                    "* \n\t"
+                    "* 7. CSS Commands:\n\t"
+                    "*      a. css target firefox :: autogenerates code that allows you to perform CSS only when the user is usning FireFox\n\t"
+                    "**/");
+            return 1;
+        } 
         char * target_file = argv[1];
         char file_contents[2000];
         char * auto_gen_code = (char *)calloc(1, sizeof(char));
