@@ -4,56 +4,58 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * All Commands:
- * 
- * 1. C Commands:
- *      a. c program :: autogenerates a basic c program file structure
- *      b. c strlength :: autogenerates a basic function for getting the length of any string
- *      c. c whitespace :: autogenerates a basic function for checking if a given string contains unwanted keywords and spaces
- *      d. c strflip :: autogenerates a basic function for reversing the contents of a string
- *      e. c doequal :: autogenerates a basic function for checking if two strings equal eachother
- *      f. c strcon :: autogenerates a basic function for concatenating contents to a string
- *      g. c smart alloc :: autogenerates a basic function for rellocating a given string, while still keeping the current contents
- *      h. c trim :: autogenerates three basic functions: ltrim (for left trimming), rtrim (for right trimming), and trim (for both)
- * 
- * 2. HTML/Bootstrap Commands:
- *      a. html :: autogenerates a basic HTML 5 file structure with JQuery JS and Bootstrap CDNs linked
- *      b. top html :: autogenerates the top portion of a basic HTML 5 file structure (with JQuery JS and Bootstrap). Top portion is defined as from the top all the way to the beginning <body> tag.
- *      c. bottom html :: autogenerates the bottom portion of a basic HTML 5 file structure. The bottom portion is defined as the end body and html tags (</body> and </html>)
- *      d. table :: autogenerates a basic Bootstrap Table
- *      e. three columns :: autogenerates a basic Bootstrap three columned row
- *      f. two columns :: autogenerates a basic Bootstrap two columned row
- *      g. card :: autogenerates a basic Bootstrap Card
- *      h. breadcrumb :: autogenerates a basic Bootstrap Breadcrumb
- *      i. form :: autogenerates a basic Bootstrap Form
- * 
- * 3. PHP Commands:
- *      a. mysql connect :: autogenerates a basic PHP connection to a given Database (MySQL)
- *      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)
- *      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)
- *      d. sql connect :: autogenerates a basic PHP connection to a given Database (SQL)
- *      e. sql select :: autogenerates a basic sql select statement (must connect to database first)
- *      f. sql insert :: autogenerates a basic sql insert statement (must connect to database first)
- * 
- * 4. Bash Commands:
- *      a. sh header :: autogenerates the bash mandatory header code
- * 
- * 5. C++ Commands:
- *      a. cpp program :: autogenerates a basic C++ program
- * 
- * 6. JavaScript Commands:
- *      a. js goto url :: autogenerates basic JS to change the current URL
- *      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page
- *      c. js button :: autogenerates a Bootstrap button that is connected to a JS function
- *      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)
- **/
-
 class gen {
     public static void main(String[] args){
+        String help_str = "/**"
+ + "\n* All Commands:"
+ + "\n* "
+ + "\n* 1. C Commands:"
+ + "\n*      a. c program :: autogenerates a basic c program file structure"
+ + "\n*      b. c strlength :: autogenerates a basic function for getting the length of any string"
+ + "\n*      c. c whitespace :: autogenerates a basic function for checking if a given string contains unwanted keywords and spaces"
+ + "\n*      d. c strflip :: autogenerates a basic function for reversing the contents of a string"
+ + "\n*      e. c doequal :: autogenerates a basic function for checking if two strings equal eachother"
+ + "\n*      f. c strcon :: autogenerates a basic function for concatenating contents to a string"
+ + "\n*      g. c smart alloc :: autogenerates a basic function for rellocating a given string, while still keeping the current contents"
+ + "\n*      h. c trim :: autogenerates three basic functions: ltrim (for left trimming), rtrim (for right trimming), and trim (for both)"
+ + "\n* "
+ + "\n* 2. HTML/Bootstrap Commands:"
+ + "\n*      a. html :: autogenerates a basic HTML 5 file structure with JQuery JS and Bootstrap CDNs linked"
+ + "\n*      b. top html :: autogenerates the top portion of a basic HTML 5 file structure (with JQuery JS and Bootstrap). Top portion is defined as from the top all the way to the beginning <body> tag."
+ + "\n*      c. bottom html :: autogenerates the bottom portion of a basic HTML 5 file structure. The bottom portion is defined as the end body and html tags (</body> and </html>)"
+ + "\n*      d. table :: autogenerates a basic Bootstrap Table"
+ + "\n*      e. three columns :: autogenerates a basic Bootstrap three columned row"
+ + "\n*      f. two columns :: autogenerates a basic Bootstrap two columned row"
+ + "\n*      g. card :: autogenerates a basic Bootstrap Card"
+ + "\n*      h. breadcrumb :: autogenerates a basic Bootstrap Breadcrumb"
+ + "\n*      i. form :: autogenerates a basic Bootstrap Form"
+ + "\n* "
+ + "\n* 3. PHP Commands:"
+ + "\n*      a. mysql connect :: autogenerates a basic PHP connection to a given Database (MySQL)"
+ + "\n*      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)"
+ + "\n*      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)"
+ + "\n*      d. sql connect :: autogenerates a basic PHP connection to a given Database (SQL)"
+ + "\n*      e. sql select :: autogenerates a basic sql select statement (must connect to database first)"
+ + "\n*      f. sql insert :: autogenerates a basic sql insert statement (must connect to database first)"
+ + "\n* "
+ + "\n* 4. Bash Commands:"
+ + "\n*      a. sh header :: autogenerates the bash mandatory header code"
+ + "\n* "
+ + "\n* 5. C++ Commands:"
+ + "\n*      a. cpp program :: autogenerates a basic C++ program"
+ + "\n* "
+ + "\n* 6. JavaScript Commands:"
+ + "\n*      a. js goto url :: autogenerates basic JS to change the current URL"
+ + "\n*      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page"
+ + "\n*      c. js button :: autogenerates a Bootstrap button that is connected to a JS function"
+ + "\n*      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)"
+ + "\n**/";
         if (args.length != 0){
             String auto_gen_code = "";
-
+            if (args[0].toLowerCase().trim().equals("help")){
+                System.out.print(help_str);
+                System.exit(0);
+            }
             try {
                 File my_file = new File(args[0]);
                 Scanner contents = new Scanner(my_file);
