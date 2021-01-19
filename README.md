@@ -7,18 +7,24 @@ If you are a windows user, you might have to re-compile the source C code to be 
 
 Instructions:
 If using bash:
-  Insert this into your .bash_profile file located ~/.bash_profile: alias gen='/{full_path_to_this_cloned_repository}/autogenerate/./gen'
+    Insert this into your .bash_profile file located ~/.bash_profile: alias gen='/{full_path_to_this_cloned_repository}/autogenerate/./gen'
 If using zshell (if your terminal displays:
-  Insert this into your .zshrc file located ~/.zshrc: alias gen='/{full_path_to_this_cloned_repository}/autogenerate/./gen'
+    Insert this into your .zshrc file located ~/.zshrc: alias gen='/{full_path_to_this_cloned_repository}/autogenerate/./gen'
 
 Am I using Bash or Zshell?
-  If your Terminal shows a '$' at the end of the paths, then it is using bash, while if it is a '%' then it is probably using zshell. Type in an incorrect command (such as 'thisistotallynotacommand') and take not if the returned error is 'sh: unrecognized syntax' or 'zsh: unrecognized syntax': zsh is zshell and sh is bash.
+    If your Terminal shows a '$' at the end of the paths, then it is using bash, while if it is a '%' then it is probably using zshell. Type in an incorrect command (such as 'thisistotallynotacommand') and take not if the returned error is 'sh: unrecognized syntax' or 'zsh: unrecognized syntax': zsh is zshell and sh is bash.
   
 To manually run:
-  /{full_path_to_this_cloned_repository}/autogenerate/./gen file_name
+    /{full_path_to_this_cloned_repository}/autogenerate/./gen file_name
 
 If you setup the alias:
-  gen file_name
+    gen file_name
 
 For help:
-  gen help
+    gen help
+  
+If you install Java, you can use a better version of gen that utilizes more commands!
+Same idea as above, but instead of aliasing './gen' do: alias jen='java /{full_path}/autogenerate/gen.java'
+
+For help:
+    jen help
