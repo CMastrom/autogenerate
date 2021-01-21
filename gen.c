@@ -2,54 +2,6 @@
 #include <stdlib.h>
 typedef const char cc;
 
-/**
- * All Commands:
- * 
- * 1. C Commands:
- *      a. c program :: autogenerates a basic c program file structure
- *      b. c strlength :: autogenerates a basic function for getting the length of any string
- *      c. c whitespace :: autogenerates a basic function for checking if a given string contains unwanted keywords and spaces
- *      d. c strflip :: autogenerates a basic function for reversing the contents of a string
- *      e. c doequal :: autogenerates a basic function for checking if two strings equal eachother
- *      f. c strcon :: autogenerates a basic function for concatenating contents to a string
- *      g. c smart alloc :: autogenerates a basic function for rellocating a given string, while still keeping the current contents
- *      h. c trim :: autogenerates three basic functions: ltrim (for left trimming), rtrim (for right trimming), and trim (for both)
- * 
- * 2. HTML/Bootstrap Commands:
- *      a. html :: autogenerates a basic HTML 5 file structure with JQuery JS and Bootstrap CDNs linked
- *      b. top html :: autogenerates the top portion of a basic HTML 5 file structure (with JQuery JS and Bootstrap). Top portion is defined as from the top all the way to the beginning <body> tag.
- *      c. bottom html :: autogenerates the bottom portion of a basic HTML 5 file structure. The bottom portion is defined as the end body and html tags (</body> and </html>)
- *      d. table :: autogenerates a basic Bootstrap Table
- *      e. three columns :: autogenerates a basic Bootstrap three columned row
- *      f. two columns :: autogenerates a basic Bootstrap two columned row
- *      g. card :: autogenerates a basic Bootstrap Card
- *      h. breadcrumb :: autogenerates a basic Bootstrap Breadcrumb
- *      i. form :: autogenerates a basic Bootstrap Form
- * 
- * 3. PHP Commands:
- *      a. mysql connect :: autogenerates a basic PHP connection to a given Database (MySQL)
- *      b. mysql select :: autogenerates a basic mysql select statement (must connect to database first)
- *      c. logg :: autogenerates a useful logg() PHP function for JS console.log() (logging to the console)
- *      d. sql connect :: autogenerates a basic PHP connection to a given Database (SQL)
- *      e. sql select :: autogenerates a basic sql select statement (must connect to database first)
- *      f. sql insert :: autogenerates a basic sql insert statement (must connect to database first)
- * 
- * 4. Bash Commands:
- *      a. sh header :: autogenerates the bash mandatory header code
- * 
- * 5. C++ Commands:
- *      a. cpp program :: autogenerates a basic C++ program
- * 
- * 6. JavaScript Commands:
- *      a. js goto url :: autogenerates basic JS to change the current URL
- *      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page
- *      c. js button :: autogenerates a Bootstrap button that is connected to a JS function
- *      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)
- * 
- * 7. CSS Commands:
- *      a. css target firefox :: autogenerates code that allows you to perform CSS only when the user is usning FireFox
- **/
-
 cc blank = ' ';
 cc new_line = '\n';
 cc carraige_return = '\r';
@@ -225,6 +177,10 @@ int main(int argc, char * argv[]){
                     "* \n\t"
                     "* 4. Bash Commands:\n\t"
                     "*      a. sh header :: autogenerates the bash mandatory header code\n\t"
+                    "*      b. sh extract wifi :: autogenerates the getwifi bash script, which can be used to extract wifi passwords from saved passwords\n\t"
+                    "*      c. sh portscanner :: autogenerates a set of useful functions for scanning ports and ips on the same network as you (NOTE: nmap needs to be installed in order for this to work. DO NOT perform deep scans on other people's devices without permission!)\n\t"
+                    "*      d. sh list color :: autogenerates aliases for listing directories with color :: 'ls' becomes 'lc' and 'ls -a' becomes 'lca'\n\t"
+                    "*      e. sh fuckmac drives :: autogenerates aliases and functions that pertain to monitoring external/internal drive processes (and subprocesses). Also includes alternative methods of ejecting drives (such as slightlyMurder and Murder)\n\t"
                     "* \n\t"
                     "* 5. C++ Commands:\n\t"
                     "*      a. cpp program :: autogenerates a basic C++ program\n\t"
@@ -234,9 +190,14 @@ int main(int argc, char * argv[]){
                     "*      b. js prevent re-post :: autogenerates basic JS to prevent a user from accidentally re-posting a form via refreshing the page\n\t"
                     "*      c. js button :: autogenerates a Bootstrap button that is connected to a JS function\n\t"
                     "*      d. js snackbar :: autogenerates a raw snackbar for error/notice messages (timed messages)\n\t"
+                    "*      e. js weep :: autogenerates the anti-cookieware weep script, which can be injected into websites to combat unnecessary cookie tracking (such as google analytics).\n\t"
                     "* \n\t"
                     "* 7. CSS Commands:\n\t"
                     "*      a. css target firefox :: autogenerates code that allows you to perform CSS only when the user is usning FireFox\n\t"
+                    "* \n\t"
+                    "* 8. Swift Commands:\n\t"
+                    "*      a. swift transition :: autogenerates the basic code to transition from one view controller to another\n\t"
+                    "*      b. swift tempurl :: autogenerates a swift function that can be used to generate temporary files on a target iPhone\n\t"
                     "**/");
             return 1;
         } 
@@ -379,12 +340,46 @@ int main(int argc, char * argv[]){
                 // CSS target firefox
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 59);
                 strcon(auto_gen_code, "@-moz-document url-prefix(){\n\t/* Target FireFox Here */\n}\n");
+            } else if (doequal(trim(file_contents), "swift transition") == 1){
+                // Swift transition to another controller
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 107);
+                strcon(auto_gen_code, "if #available(iOS 13.0, *) {\n\tlet ViewController = self.storyboard?.instantiateViewController(identifier: \"{name of view controller}\") as! UIViewController\n\t//Make the view controller full screen\n\tViewController.modalPresentationStyle = .fullScreen\n\tself.present(ViewController, animated: false, completion: nil)\n}");
+            } else if (doequal(trim(file_contents), "swift tempurl") == 1){
+                // Swift generate temporary file urls
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 274);
+                strcon(auto_gen_code, "func tempURL() -> URL? {\n\tlet directory = NSTemporaryDirectory() as NSString\n\n\tif directory != \"\" {\n\t\tlet path = directory.appendingPathComponent(NSUUID().uuidString + \".MOV\")\n\t\tlet urlPath = URL(fileURLWithPath: path)\n\t\tself.lastVideoTempURL = urlPath\n\t\treturn urlPath\n\t}\n\n\treturn nil\n}");
+            } else if (doequal(trim(file_contents), "js weep") == 1){
+                // JS Weep - anti-cookieware 
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 1096);
+                strcon(auto_gen_code, "function createCookie(name,value,days,domain) {\nif (days) {\nvar date = new Date();\ndate.setTime(date.getTime()+(days*24*60*60*1000));\nvar expires = \"; expires=\"+date.toGMTString();\n}\nelse var expires = \"\";\nif (Array.isArray(domain)){\nfor (var i = 0; i < domain.length; i++){\ndocument.cookie = name+\"=\"+value+expires+\"; domain=\"+domain[i]+\"; path=/\";\n}\n} else {\ndocument.cookie = name+\"=\"+value+expires+\"; domain=\"+domain+\"; path=/\";\n}\n}\n\nfunction eraseCookie(name,domain) {\ncreateCookie(name,\"\",-1,domain);\n}\n\nfunction wage_war(domain){\nvar cookies = document.cookie.split(\";\");\nfor (var i = 0; i < cookies.length; i++){\nlet cookie = cookies[i].split(\"=\")[0];\nconsole.log(\"Attacking cooke = \'\"+cookie+\"\'...\");\neraseCookie(cookie,domain);\n}\nconsole.log(\"Updated Cookies: \");\nconsole.log(document.cookie.split(\";\"));\n}\n\n// By default, it will target google\'s services, but you can add others if you\'de like:\nconst typical_cookie_domains = [\'.accounts.google.com\', \'accounts.google.com\', \'.google.com\', \'.developers.google.com\', \'developers.google.com\', \'.gstatic.google.com\', \'.supersummary.com\'];");
+            } else if (doequal(trim(file_contents), "sh extract wifi") == 1){
+                // Bash extract wifi passwords from saved keys
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 122);
+                strcon(auto_gen_code, "networksetup -listpreferredwirelessnetworks en0\n\nread -p \"Wifi: \" response\nsecurity find-generic-password -wa \"$response\"");
+            } else if (doequal(trim(file_contents), "sh portscanner") == 1){
+                // Bash set of portscanning functions
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 590);
+                strcon(auto_gen_code, "function getip() {\n\tif [[ $# -eq 0 ]] ; then\n\t\techo 'getIP Error: Must specify submask IP address.'\n\telse\n\t\tnmap -sP $1\n\tfi\n}\nfunction scanme() {\n\tif [[ $# -eq 0 ]] ; then\n\t\techo 'scanme Error: Must specify number of ports to scan.'\n\telse\n\t\tif [ \"$1\" = \"-a\" ]\n\t\tthen\n\t\t\tnmap -p 1-65535 localhost\n\t\telse\n\t\t\tif [[ $1 -le 65535 ]] ; then\n\t\t\t\tnmap -p 1-$1 localhost\n\t\t\telse\n\t\t\t\techo 'scanme Error: There are only 65,535 ports!'\n\t\t\tfi\n\t\tfi\n\tfi\n}\nfunction scanthem() {\n\tif [ $2 = \"\" ] ; then\n\t\techo 'scanthem Error: Must specify number of ports to scan and the IP address of target.'\n\telse\n\t\tif [ \"$1\" = \"-a\" ]\n\t\tthen\n\t\t\tnmap -p 1-65535 localhost\n\t\telse\n\t\t\tif [[ $1 -le 65535 ]] ; then\n\t\t\t\tnmap -p 1-$1 $2\n\t\t\telse\n\t\t\t\techo 'scanme Error: There are only 65,535 ports!'\n\t\t\tfi\n\t\tfi\n\tfi\n}\nfunction getport() {\n\tif [[ $# -eq 0 ]] ; then\n\t\techo 'getport Error: Must specify port to scan (i.e. tcp:100).'\n\telse\n\t\tsudo lsof -i $1\n\tfi\n}");
+            } else if (doequal(trim(file_contents), "sh list color") == 1){
+                // Bash lca - list with color
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 38);
+                strcon(auto_gen_code, "alias lc='ls -G'\nalias lca='ls -G -a'");
+            } else if (doequal(trim(file_contents), "sh fuckmac drives") == 1){
+                // Bash aliases and functions for handling drives and their subprocesses 
+                smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 107);
+                strcon(auto_gen_code, "alias eject='sudo diskutil unmountDisk '\nalias murder='sudo diskutil unmount force '\nalias listen='sudo lsof '\nalias monitor='sudo lsof | grep '\nalias demolish='sudo kill -9 '\nfunction slightlyMurder() {\n\tif [ \"$1\" != \"\" ] ; then\n\t\twhile IFS= read -r line; do\n\t\t\tpids+=( \"$line\" )\n\t\tdone < <( sudo lsof | grep \"$1\" | awk '{print $2}' )\n\t\tfor i in \"${pids[@]}\"\n\t\tdo\n\t\t\t\tsudo kill -9 $i\n\t\tdone\n\t\techo 'Killed all known processes. Now trying to eject gracefully...'\n\t\teject \"$1\"\n\telse\n\t\techo 'slightlyMurder failed. Target not specified...'\n\tfi\n}");
             } else {
                 // if no command found, just re-display the current contents of that line
                 smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 2000);
                 strcon(auto_gen_code, file_contents);
             }
         }
+
+            //  else if (doequal(trim(file_contents), "") == 1){
+            //     // Swift 
+            //     smart_realloc(&auto_gen_code, strlength(auto_gen_code) + 107);
+            //     strcon(auto_gen_code, "");
+            // }
 
         fclose(my_file);
         my_file = fopen(target_file, "w");
