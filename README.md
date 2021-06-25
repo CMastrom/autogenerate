@@ -11,11 +11,11 @@ This tiny but efficient C program allows you to autogenerate code in your progra
 $|c program|$  
 **%** gen test.c  
 **%** cat test.c  
-`#include <stdio.h>
-#include <stdlib.h>
-
-int main(int argc, char * argv[]){
-	// Insert code here
-	return 0;
-}`
+#include <stdio.h>  
+#include <stdlib.h>  
+  
+int main(int argc, char * argv[]){  
+	// Insert code here  
+	return 0;  
+}
 
