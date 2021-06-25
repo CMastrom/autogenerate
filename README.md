@@ -10,6 +10,7 @@ This tiny but efficient C program allows you to autogenerate code in your progra
 
 #### Create Basic C Program:
 <img width="98" alt="Screen Shot 2021-06-24 at 8 50 58 PM" src="https://user-images.githubusercontent.com/34284639/123352881-405d4b80-d52e-11eb-9a79-2230e8ecbc96.png">
+<img width="563" alt="Screen Shot 2021-06-24 at 8 54 57 PM" src="https://user-images.githubusercontent.com/34284639/123352975-78648e80-d52e-11eb-8034-5d9b2e8ceb66.png">
 <img width="98" alt="Screen Shot 2021-06-24 at 8 51 27 PM" src="https://user-images.githubusercontent.com/34284639/123352885-42bfa580-d52e-11eb-89f1-acd4d1b290a3.png">
 <img width="98" alt="Screen Shot 2021-06-24 at 8 51 39 PM" src="https://user-images.githubusercontent.com/34284639/123352889-43f0d280-d52e-11eb-8cd3-8fe83c14949a.png">
 <img width="246" alt="Screen Shot 2021-06-24 at 8 51 54 PM" src="https://user-images.githubusercontent.com/34284639/123352892-4521ff80-d52e-11eb-82ee-12c0b4ab38ff.png">
