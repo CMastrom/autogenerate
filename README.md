@@ -7,10 +7,10 @@ This tiny but efficient C program allows you to autogenerate code in your progra
 **%**  gen some_file.extension
 
 ### Basic Example
-**%** nano test.c
-$|c program|$
-**%** gen test.c
-**%** cat test.c
+**%** nano test.c  
+$|c program|$  
+**%** gen test.c  
+**%** cat test.c  
 `#include <stdio.h>
 #include <stdlib.h>
 
